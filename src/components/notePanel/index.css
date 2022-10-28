@@ -1,0 +1,54 @@
+.note-panel {
+    text-align: center;
+    margin: 0 auto;
+}
+.panel-title {
+    font-weight: bold;
+    font-size: 30px;
+    padding-top: 30px;
+    width: 400px;
+    overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+    margin: 0 auto;
+}
+.panel-body {
+    margin-top: 20px;
+    padding: 30px;
+}
+.panel-edit-title {
+    width: 400px;
+    height: 36px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #000;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 25px;
+}
+
+.panel-edit-body {
+    width: 90%;
+    height: 400px;
+    padding: 20px;
+    border: none;
+    font-size: 16px;
+    outline: none
+}
+
+.panel-button {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 30px;
+    border-radius: 5px;
+    border:  1px solid #000;
+    cursor: pointer;
+}
+.panel-button:hover {
+    border: none;
+    background: #009578;;
+    color: #fff;
+}

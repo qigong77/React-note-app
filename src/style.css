@@ -1,0 +1,15 @@
+ul, li {
+  list-style: none;
+}
+.note-box {
+  /* border: 1px solid red; */
+  display: flex;
+  height: 800px;
+}
+.note-aside {
+  border-right: 2px solid #ddd;
+}
+.note-panel {
+  flex: 1;
+  position: relative;
+}
