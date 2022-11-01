@@ -1,8 +1,9 @@
 import React from 'react';
 import NotesList from './components/noteList';
 import NotePanel from './components/notePanel';
-import {getTime} from './common/util'
+import {getTime, concatArray} from './common/util'
 import './style.css';
+import exportFromJSON from 'export-from-json';
 
 class App extends React.Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class App extends React.Component {
         if(id === activedId) {
             this.setState({activedId: 0})
         }
-        notes = notes.filter((item) => item.id != id)
+        notes = notes.filter((item) => item.id !== id)
         this.refreshList(notes);
     }
 
@@ -66,13 +67,62 @@ class App extends React.Component {
     noteActived = (activedId) => {
         this.setState({activedId})
     }
+
+    //批量下载
+    withBatchDownload = () => {
+        const notes = JSON.parse(localStorage.getItem('note_lists') || "[]");
+        let data = notes;
+        const fileName = 'export_notes';
+        const exportType =  exportFromJSON.types.xml;
+        exportFromJSON({data, fileName, exportType})
+
+    }
+
+    //批量上传
+    withBatchUpload = (e) => {
+        let addNotes = [];
+        let notes = this.state.notes;
+        let file = e.target.files[0];
+        let fr = new FileReader();
+        fr.readAsText(file);
+        fr.onload = () => {
+            addNotes = this.parseXml(fr.result);
+            this.refreshList(concatArray(addNotes, notes, 'id'));
+        }
+    }
+
+    //将xml文件内容解析为数组
+    parseXml = (xml) => {
+        let parser = new DOMParser();
+        let xmlDoc = parser.parseFromString(xml, "text/xml");
+        let list = xmlDoc.getElementsByTagName('element');
+        let newArticle = [];
+        for(let i=0; i < list.length; i++){
+            let row = list[i];
+            newArticle.push({
+                "title": row.getElementsByTagName('title')[0].innerHTML.replace(/\ +/g,""),
+                "body": row.getElementsByTagName('body')[0].innerHTML.replace(/\ +/g,""),
+                "time": row.getElementsByTagName('time')[0].innerHTML.replace(/\ +/g,""),
+                "id": row.getElementsByTagName('id')[0].innerHTML.replace(/\ +/g,"")
+            });
+        }
+        return newArticle;
+    }
+
     render() {
         const activedId = this.state.activedId;
         const notes = this.state.notes;
-        const note = activedId ? notes.filter((item) => item.id == activedId)[0] : [];
+        const note = activedId ? notes.filter((item) => item.id === activedId)[0] : [];
         return (
             <div className='note-box'>
                 <aside className='note-aside'>
+                    <div className='note-batch-buttons'>
+                        <button className='note-button-upload'>
+                            <span>批量上传</span>
+                            <input type='file' accept='.xml' onChange={this.withBatchUpload}/>
+                        </button>
+                        <button className='note-button-download' onClick={this.withBatchDownload}>批量下载</button>
+                    </div>
                     <NotesList 
                         notes={notes} 
                         addNote={this.addNote} 

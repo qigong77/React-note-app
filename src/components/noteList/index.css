@@ -61,6 +61,7 @@ li {
     bottom: 5px;
     width: 60px;
     height: 26px;
+    cursor: pointer;
 }
 .note-delete:hover {
      border: none;

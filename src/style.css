@@ -4,11 +4,59 @@ ul, li {
 .note-box {
   /* border: 1px solid red; */
   display: flex;
-  height: 800px;
+  height: 100%;
+  min-height: 800px;
 }
 .note-aside {
   border-right: 2px solid #ddd;
 }
+.note-batch-buttons {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.note-button-upload {
+  position: relative;
+  margin-right: 18px;
+  margin-left: 10px;
+}
+
+.note-button-upload span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 150px;
+  height: 32px;
+  line-height: 32px;
+  margin-top: 2px;
+}
+.note-button-upload input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 150px;
+  height: 32px;
+  opacity: 0;
+}
+
+.note-button-upload,
+.note-button-download {
+  border-width: 1px;
+  cursor: pointer;
+  background-color: #fff;
+  width: 43%;
+  height: 37px;
+  border-radius: 4px;
+}
+
+.note-button-upload:hover,
+.note-button-download:hover {
+  background-color: #009578;
+  color: #fff;
+  border: none;
+}
+
+
 .note-panel {
   flex: 1;
   position: relative;
